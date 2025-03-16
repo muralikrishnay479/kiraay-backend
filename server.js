@@ -1,11 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const connectDB = require("./config/dbConnection");
+const cors = require('cors');
 const app = express();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5001 ;
 
 connectDB();
+app.use(cors());
 
 app.use(express.json());
 app.use("/api/contacts", require("./routes/contactRoutes"));
@@ -21,7 +23,16 @@ app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/transactions", require("./routes/transactionRoutes"));
 app.use("/api/wishlist", require("./routes/wishlistRoutes"));
 app.use("/api/messages", require("./routes/messagesRoutes"));
+
+
+
+// Add ping endpoint
+app.get('/api/ping', (req, res) => res.send('pong'));
+
 app.use(require("./middleware/errorHandler"));
+
+
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
