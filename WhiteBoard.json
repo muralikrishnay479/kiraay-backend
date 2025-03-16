@@ -1,0 +1,273 @@
+Below are the sample cURL commands for **login** and **register** endpoints, along with all the previously covered endpoints (`chats`, `gallery`, `notifications`, `orders`, `products`, `transactions`, `wishlist`). I’ll include only the input data (request commands with URLs and payloads where applicable) and no output, as requested. These assume a typical `/api/users` setup for authentication, integrated with your existing server.js structure.
+
+---
+
+### 1. Users (Login and Register)
+#### POST /api/users/register - Register a User
+```bash
+curl -X POST http: //localhost:5001/api/users/register \
+-H "Content-Type: application/json" \
+-d '{
+  "username": "John Doe",
+  "email": "john@example.com",
+  "phone": "+12025550123",
+  "password": "password123"
+}'
+```
+
+#### POST /api/users/login - Login a User
+```bash
+curl -X POST http: //localhost:5001/api/users/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "john@example.com",
+  "password": "password123"
+}'
+```
+
+---
+
+### 2. Chats
+#### GET /api/chats - List User’s Chats
+```bash
+curl -X GET http: //localhost:5001/api/chats \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/chats - Create a New Chat
+```bash
+curl -X POST http: //localhost:5001/api/chats \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "participantId": "67d67f6223e5342d69935126"
+}'
+-d '{
+  "participantId": "67d67e7823e5342d6993511d"
+}'
+```
+
+#### DELETE /api/chats/:id - Delete a Chat
+```bash
+curl -X DELETE http: //localhost:5001/api/chats/507f1f77bcf86cd799439012 \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+---
+
+### 3. Gallery
+#### GET /api/gallery - List Product Images
+```bash
+curl -X GET "http://localhost:5001/api/gallery?productId=507f191e810c19729de860ec" \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/gallery - Create a New Image
+```bash
+curl -X POST http: //localhost:5001/api/gallery \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "productId": "507f191e810c19729de860ec",
+  "imageUrl": "https://example.com/images/camera-side.jpg",
+  "isPrimary": true
+}'
+```
+
+#### PUT /api/gallery/:id - Update an Image
+```bash
+curl -X PUT http: //localhost:5001/api/gallery/507f1f77bcf86cd799439013 \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "imageUrl": "https://example.com/images/camera-side-updated.jpg",
+  "isPrimary": false
+}'
+```
+
+#### DELETE /api/gallery/:id - Delete an Image
+```bash
+curl -X DELETE http: //localhost:5001/api/gallery/507f1f77bcf86cd799439013 \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+---
+
+### 4. Notifications
+#### GET /api/notifications - List User’s Notifications
+```bash
+curl -X GET http: //localhost:5001/api/notifications \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/notifications - Create a Notification
+```bash
+curl -X POST http: //localhost:5001/api/notifications \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "userId": "507f191e810c19729de860ea",
+  "type": "system",
+  "title": "Welcome",
+  "message": "Thanks for joining!",
+  "relatedId": "507f191e810c19729de860ea",
+  "relatedModel": "User"
+}'
+```
+
+#### DELETE /api/notifications/:id - Delete a Notification
+```bash
+curl -X DELETE http: //localhost:5001/api/notifications/507f1f77bcf86cd799439014 \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+---
+
+### 5. Orders
+#### GET /api/orders - List User’s Orders
+```bash
+curl -X GET http: //localhost:5001/api/orders \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/orders - Create a New Order
+```bash
+curl -X POST http: //localhost:5001/api/orders \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "productId": "507f191e810c19729de860ec",
+  "startDate": "2025-03-25T00:00:00.000Z",
+  "endDate": "2025-03-27T00:00:00.000Z",
+  "pickupAddressId": "507f1f77bcf86cd799439010"
+}'
+```
+
+#### PUT /api/orders/:id - Update an Order
+```bash
+curl -X PUT http: //localhost:5001/api/orders/507f1f77bcf86cd799439012 \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "status": "accepted"
+}'
+```
+
+#### DELETE /api/orders/:id - Delete an Order
+```bash
+curl -X DELETE http: //localhost:5001/api/orders/507f1f77bcf86cd799439012 \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+---
+
+### 6. Products
+#### GET /api/products - List Products
+```bash
+curl -X GET "http://localhost:5001/api/products?near=-73.935242,40.730610" \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/products - Create a Product
+```bash
+curl -X POST http: //localhost:5001/api/products \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "Guitar",
+  "description": "Acoustic guitar",
+  "categoryId": "507f1f77bcf86cd799439015",
+  "pricePerDay": 15,
+  "latitude": 40.730610,
+  "longitude": -73.935242
+}'
+```
+
+#### PUT /api/products/:id - Update a Product
+```bash
+curl -X PUT http: //localhost:5001/api/products/507f1f77bcf86cd799439016 \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "Updated Guitar",
+  "description": "Acoustic guitar with case",
+  "categoryId": "507f1f77bcf86cd799439015",
+  "pricePerDay": 20,
+  "latitude": 40.730610,
+  "longitude": -73.935242
+}'
+```
+
+#### DELETE /api/products/:id - Delete a Product
+```bash
+curl -X DELETE http: //localhost:5001/api/products/507f1f77bcf86cd799439016 \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+---
+
+### 7. Transactions
+#### GET /api/transactions - List User’s Transactions
+```bash
+curl -X GET http: //localhost:5001/api/transactions \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/transactions - Create a Transaction
+```bash
+curl -X POST http: //localhost:5001/api/transactions \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "orderId": "507f1f77bcf86cd799439012",
+  "paymentMethod": "card"
+}'
+```
+
+---
+
+### 8. Wishlist
+#### GET /api/wishlist - List User’s Wishlist
+```bash
+curl -X GET http: //localhost:5001/api/wishlist \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### POST /api/wishlist - Add to Wishlist
+```bash
+curl -X POST http: //localhost:5001/api/wishlist \
+-H "Authorization: Bearer <your-jwt-token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "productId": "507f191e810c19729de860ec"
+}'
+```
+
+
+
+
+#### DELETE /api/wishlist/:id - Remove from Wishlist
+```bash
+curl -X DELETE http: //localhost:5001/api/wishlist/507f1f77bcf86cd799439019 \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+---
+
+### Notes
+- Replace `<your-jwt-token>` with the token returned from the `/api/users/login` response.
+- These commands assume your server is running on `http: //localhost:5001`.
+- Copy-paste directly into VS Code or a terminal for testing.
+
+
+
+
+{"chatId": "507f1f77bcf86cd799439012", "content": "Hey, how’s it going?"}
+
+"http://localhost:5001/api/messages?chatId=507f1f77bcf86cd799439012"
+
+
+
+CLOUDINARY_CLOUD_NAME=dgmubahum
+CLOUDINARY_API_KEY=214626415775424
+CLOUDINARY_API_SECRET=u4BohRd_fQ6Nv0roV2PPW-vIDkc
